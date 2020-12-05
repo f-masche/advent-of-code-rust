@@ -21,17 +21,19 @@ impl Puzzle<'_> {
 
     match result {
       Some(x) => println!(
-        "{}✔︎{} Solution {}: {}\"{}\"\n",
+        "{}✔︎{} Solution {}: {}\"{}\"\n{}",
         color::Fg(color::Green),
         style::Reset,
         self.name,
         color::Fg(color::Green),
-        x
+        x,
+        style::Reset,
       ),
       None => println!(
-        "{}😡 No solution found for {}\n",
+        "{}😡 No solution found for {}{}\n",
         color::Fg(color::Red),
-        self.name
+        self.name,
+        style::Reset,
       ),
     };
   }
@@ -51,18 +53,20 @@ impl Puzzle<'_> {
           );
         } else {
           println!(
-            "{}💥 Test {} failed: \"{}\" != \"{}\"",
+            "{}💥 Test {} failed: \"{}\" != \"{}\"{}",
             color::Fg(color::Red),
             self.name,
             x,
-            expected
+            expected,
+            style::Reset,
           );
         }
       }
       None => println!(
-        "{}😡 No test result returned for \"{}\"",
+        "{}😡 No test result returned for \"{}\"{}",
         color::Fg(color::Red),
-        self.name
+        self.name,
+        style::Reset,
       ),
     };
   }
@@ -73,7 +77,6 @@ impl Puzzle<'_> {
     buf
       .lines()
       .map(|l| l.expect("Could not parse line"))
-      .filter(|l| l.trim().len() > 0)
       .collect()
   }
 }

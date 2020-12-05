@@ -22,7 +22,7 @@ pub fn run() {
   b.run();
 }
 
-fn parse_line(line: &str) -> (usize, usize, char, String) {
+fn parse_line(line: &String) -> (usize, usize, char, String) {
   PASSWORD_POLICY_PATTERN
     .captures(&line)
     .map(|cap: Captures| {
@@ -38,10 +38,10 @@ fn parse_line(line: &str) -> (usize, usize, char, String) {
 fn solution_a(input: &Vec<String>) -> Option<String> {
   let count = input
     .into_iter()
-    .filter(|line| {
-      let (min, max, character, password) = parse_line(&line);
-      let occurences = password.matches(character).count();
-      occurences >= min && occurences <= max
+    .map(parse_line)
+    .filter(|(min, max, character, password)| {
+      let occurences = password.matches(*character).count();
+      occurences >= *min && occurences <= *max
     })
     .count()
     .to_string();
@@ -52,7 +52,7 @@ fn solution_a(input: &Vec<String>) -> Option<String> {
 fn solution_b(input: &Vec<String>) -> Option<String> {
   let count = input
     .into_iter()
-    .map(|line| parse_line(&line))
+    .map(parse_line)
     .filter(|(min, max, character, password)| {
       let first_char = password.chars().nth(min - 1).unwrap();
       let second_char = password.chars().nth(max - 1).unwrap();

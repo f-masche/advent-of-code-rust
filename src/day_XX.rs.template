@@ -1,0 +1,25 @@
+use crate::puzzle::Puzzle;
+
+pub fn run() {
+  let a = Puzzle {
+    name: "-a",
+    solution: solution_a,
+  };
+  a.run_test("");
+  // a.run();
+
+  // let b = Puzzle {
+  //   name: "-b",
+  //   solution: solution_b,
+  // };
+  // b.run_test("");
+  // b.run();
+}
+
+fn solution_a(input: &Vec<String>) -> Option<String> {
+  None
+}
+
+fn solution_b(input: &Vec<String>) -> Option<String> {
+  None
+}
