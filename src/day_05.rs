@@ -12,7 +12,6 @@ pub fn run() {
     name: "05-b",
     solution: solution_b,
   };
-  //b.run_test("");
   b.run();
 }
 
