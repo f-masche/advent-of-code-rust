@@ -16,7 +16,7 @@ pub struct Puzzle<'a> {
 
 impl Puzzle<'_> {
   pub fn run(&self) {
-    let input = Puzzle::get_input(INPUT_PATH.replace("%id%", &self.name));
+    let input = Puzzle::get_input(&self.name, INPUT_PATH);
     let result: Option<String> = (self.solution)(&input);
 
     match result {
@@ -39,7 +39,7 @@ impl Puzzle<'_> {
   }
 
   pub fn run_test(&self, expected: &str) {
-    let test_input = Puzzle::get_input(TEST_INPUT_PATH.replace("%id%", &self.name));
+    let test_input = Puzzle::get_input(&self.name, TEST_INPUT_PATH);
     let test_result = (self.solution)(&test_input);
 
     match test_result {
@@ -71,8 +71,17 @@ impl Puzzle<'_> {
     };
   }
 
-  fn get_input(filename: impl AsRef<Path>) -> Vec<String> {
-    let file = File::open(filename).expect("no such file");
+  fn get_input(name: &str, template: &str) -> Vec<String> {
+    let tokens: Vec<&str> = name.split("-").collect();
+    let id = tokens[0];
+    let mut path = template.replace("%id%", name);
+
+    if !Path::new(&path).exists() {
+      path = template.replace("%id%", id);
+    }
+    println!("{}", path);
+
+    let file = File::open(path).expect("no such file");
     let buf = BufReader::new(file);
     buf
       .lines()
