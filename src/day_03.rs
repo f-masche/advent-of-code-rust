@@ -16,7 +16,7 @@ pub fn run() {
   b.run();
 }
 
-fn parse_line(line: &String) -> Vec<bool> {
+fn parse_line(line: &str) -> Vec<bool> {
   line.chars().map(|c| c == '#').collect()
 }
 
@@ -35,14 +35,14 @@ fn run_slope(forest: &Vec<Vec<bool>>, step_x: usize, step_y: usize) -> u32 {
   trees
 }
 
-fn solution_a(input: &Vec<String>) -> Option<String> {
-  let forest: Vec<Vec<bool>> = input.into_iter().map(parse_line).collect();
+fn solution_a(input: &String) -> Option<String> {
+  let forest: Vec<Vec<bool>> = input.lines().map(parse_line).collect();
 
   Some(run_slope(&forest, 3, 1).to_string())
 }
 
-fn solution_b(input: &Vec<String>) -> Option<String> {
-  let forest: Vec<Vec<bool>> = input.into_iter().map(parse_line).collect();
+fn solution_b(input: &String) -> Option<String> {
+  let forest: Vec<Vec<bool>> = input.lines().map(parse_line).collect();
 
   let result: u64 = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
     .iter()

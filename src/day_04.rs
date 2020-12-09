@@ -9,6 +9,8 @@ lazy_static! {
   static ref PID_PATTERN: Regex = Regex::new(r"^[0-9]{9}$").unwrap();
 }
 
+static KEYS: [&str; 7] = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"];
+
 pub fn run() {
   let a = Puzzle {
     name: "04-a",
@@ -26,13 +28,7 @@ pub fn run() {
 }
 
 fn validate_passport(passport: &HashMap<String, String>) -> bool {
-  passport.contains_key("byr")
-    && passport.contains_key("iyr")
-    && passport.contains_key("eyr")
-    && passport.contains_key("hgt")
-    && passport.contains_key("hcl")
-    && passport.contains_key("ecl")
-    && passport.contains_key("pid")
+  KEYS.iter().all(|key| passport.contains_key(*key))
 }
 
 fn validate_values(passport: &HashMap<String, String>) -> bool {
@@ -79,11 +75,11 @@ fn parse_passport(input: &String) -> HashMap<String, String> {
   })
 }
 
-fn parse_passports(batch: &Vec<String>) -> Vec<HashMap<String, String>> {
+fn parse_passports(batch: &String) -> Vec<HashMap<String, String>> {
   let mut passports = Vec::new();
   let mut passport_line: Vec<String> = Vec::new();
 
-  for line in batch.iter() {
+  for line in batch.lines() {
     if line.trim().is_empty() {
       passports.push(parse_passport(&(passport_line.join(" "))));
       passport_line = Vec::new();
@@ -97,7 +93,7 @@ fn parse_passports(batch: &Vec<String>) -> Vec<HashMap<String, String>> {
   passports
 }
 
-fn solution_a(input: &Vec<String>) -> Option<String> {
+fn solution_a(input: &String) -> Option<String> {
   let passports = parse_passports(input);
   let count = passports
     .iter()
@@ -107,7 +103,7 @@ fn solution_a(input: &Vec<String>) -> Option<String> {
   Some(count.to_string())
 }
 
-fn solution_b(input: &Vec<String>) -> Option<String> {
+fn solution_b(input: &String) -> Option<String> {
   let passports = parse_passports(input);
   let count = passports
     .iter()

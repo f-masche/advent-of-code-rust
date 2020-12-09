@@ -17,12 +17,12 @@ pub fn run() {
   b.run();
 }
 
-fn parse_line(line: &String) -> u32 {
+fn parse_line(line: &str) -> u32 {
   line.parse::<u32>().unwrap()
 }
 
-fn solution_a(input: &Vec<String>) -> Option<String> {
-  let numbers: Vec<u32> = input.iter().map(parse_line).collect();
+fn solution_a(input: &String) -> Option<String> {
+  let numbers: Vec<u32> = input.lines().map(parse_line).collect();
 
   for (i, num_a) in numbers.iter().enumerate() {
     for num_b in numbers.iter().skip(i) {
@@ -35,8 +35,8 @@ fn solution_a(input: &Vec<String>) -> Option<String> {
   None
 }
 
-fn solution_b(input: &Vec<String>) -> Option<String> {
-  let numbers: Vec<u32> = input.iter().map(parse_line).collect();
+fn solution_b(input: &String) -> Option<String> {
+  let numbers: Vec<u32> = input.lines().map(parse_line).collect();
 
   for (i, num_a) in numbers.iter().enumerate() {
     for (j, num_b) in numbers.iter().enumerate().skip(i) {

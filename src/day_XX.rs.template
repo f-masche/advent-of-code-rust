@@ -16,10 +16,10 @@ pub fn run() {
   // b.run();
 }
 
-fn solution_a(input: &Vec<String>) -> Option<String> {
+fn solution_a(input: &String) -> Option<String> {
   None
 }
 
-fn solution_b(input: &Vec<String>) -> Option<String> {
+fn solution_b(input: &String) -> Option<String> {
   None
 }

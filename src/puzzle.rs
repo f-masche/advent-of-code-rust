@@ -1,8 +1,4 @@
-use std::{
-  fs::File,
-  io::{BufRead, BufReader},
-  path::Path,
-};
+use std::{fs::read_to_string, path::Path};
 use termion::{color, style};
 
 const INPUT_PATH: &str = "data/%id%.txt";
@@ -11,7 +7,7 @@ const TEST_INPUT_PATH: &str = "data/%id%-test.txt";
 
 pub struct Puzzle<'a> {
   pub name: &'a str,
-  pub solution: fn(&Vec<String>) -> Option<String>,
+  pub solution: fn(&String) -> Option<String>,
 }
 
 impl Puzzle<'_> {
@@ -71,7 +67,7 @@ impl Puzzle<'_> {
     };
   }
 
-  fn get_input(name: &str, template: &str) -> Vec<String> {
+  fn get_input(name: &str, template: &str) -> String {
     let tokens: Vec<&str> = name.split("-").collect();
     let id = tokens[0];
     let mut path = template.replace("%id%", name);
@@ -81,11 +77,6 @@ impl Puzzle<'_> {
     }
     println!("{}", path);
 
-    let file = File::open(path).expect("no such file");
-    let buf = BufReader::new(file);
-    buf
-      .lines()
-      .map(|l| l.expect("Could not parse line"))
-      .collect()
+    read_to_string(path).unwrap()
   }
 }

@@ -18,7 +18,7 @@ pub fn run() {
   b.run();
 }
 
-fn solution_a(input: &Vec<String>) -> Option<String> {
+fn solution_a(input: &String) -> Option<String> {
   let result: usize = groups(input)
     .iter()
     .map(|group| group.iter().flat_map(|line| line.chars()).unique().count())
@@ -27,24 +27,17 @@ fn solution_a(input: &Vec<String>) -> Option<String> {
   Some(result.to_string())
 }
 
-fn groups(input: &Vec<String>) -> Vec<Vec<String>> {
+fn groups(input: &str) -> Vec<Vec<&str>> {
   let mut groups = Vec::new();
-  let mut current = Vec::new();
 
-  for line in input {
-    if line.is_empty() {
-      groups.push(current);
-      current = Vec::new();
-    } else {
-      current.push(line.to_string());
-    }
+  for group in input.split("\n\n") {
+    groups.push(group.lines().collect::<Vec<&str>>());
   }
-  groups.push(current);
 
   groups
 }
 
-fn solution_b(input: &Vec<String>) -> Option<String> {
+fn solution_b(input: &String) -> Option<String> {
   let result: usize = groups(input)
     .iter()
     .map(|group| {

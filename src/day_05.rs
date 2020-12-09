@@ -15,7 +15,7 @@ pub fn run() {
   b.run();
 }
 
-fn get_seat(boarding_pass: &String) -> u32 {
+fn get_seat(boarding_pass: &str) -> u32 {
   let mut upper: f32 = 127.0;
   let mut lower: f32 = 0.0;
   let mut upper_row: f32 = 7.0;
@@ -26,8 +26,7 @@ fn get_seat(boarding_pass: &String) -> u32 {
 
     if x == 'B' {
       lower += ((upper - lower) / 2.0).ceil();
-    }
-    if x == 'F' {
+    } else if x == 'F' {
       upper -= ((upper - lower) / 2.0).ceil();
     }
   }
@@ -37,8 +36,7 @@ fn get_seat(boarding_pass: &String) -> u32 {
 
     if x == 'R' {
       lower_row += ((upper_row - lower_row) / 2.0).ceil();
-    }
-    if x == 'L' {
+    } else if x == 'L' {
       upper_row -= ((upper_row - lower_row) / 2.0).ceil();
     }
   }
@@ -46,13 +44,13 @@ fn get_seat(boarding_pass: &String) -> u32 {
   (lower * 8.0 + lower_row) as u32
 }
 
-fn solution_a(input: &Vec<String>) -> Option<String> {
-  let result = input.iter().map(get_seat).max().unwrap();
+fn solution_a(input: &String) -> Option<String> {
+  let result = input.lines().map(get_seat).max().unwrap();
   Some(result.to_string())
 }
 
-fn solution_b(input: &Vec<String>) -> Option<String> {
-  let mut seats: Vec<u32> = input.iter().map(get_seat).collect::<Vec<u32>>();
+fn solution_b(input: &String) -> Option<String> {
+  let mut seats: Vec<u32> = input.lines().map(get_seat).collect::<Vec<u32>>();
   seats.sort();
 
   for (i, seat) in seats.iter().enumerate() {
