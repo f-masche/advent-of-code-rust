@@ -1,3 +1,4 @@
+use std::time::Instant;
 use std::{fs::read_to_string, path::Path};
 use termion::{color, style};
 
@@ -13,7 +14,9 @@ pub struct Puzzle<'a> {
 impl Puzzle<'_> {
   pub fn run(&self) {
     let input = Puzzle::get_input(&self.name, INPUT_PATH);
+    let now = Instant::now();
     let result: Option<String> = (self.solution)(&input);
+    println!("Time {}µs", now.elapsed().as_micros());
 
     match result {
       Some(x) => println!(
